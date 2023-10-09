@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Edit Recipe:</h1>
+            <div>
+                <a href="/dashboard">back to recipes</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% for x in user_recipes %}
+                <form action="/update" method="post">
+                    <div class="login-card justify-content-between">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" id="" value="{{x.recipe.name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <input style="width: 190px; height:100px;" type="text" name="description" id=""
+                                value="{{x.recipe.description}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="instruction">Instructions:</label>
+                            <input style="width: 190px; height:100px; text-align: start;" type="text" name="instruction"
+                                id="" value="{{x.recipe.instruction}}">
+                        </div>
+                    </div>
+            </div>
+            <div class="col">
+                <div class="login-card">
+
+                    <label for="date_cooked">Date cooked/Made:</label>
+                    <input type="date" name="date_cooked" id="" value="{{x.recipe.date_cooked}}">
+
+                    <p>Less than 30 mins? :</p>
+                    {% if x.recipe.cook_time == 30 %}
+                    <input type="radio" name="cook_time" value="30" checked>
+                    <label for="cook_time">Yes</label>
+                    {% else %}
+                    <input type="radio" name="cook_time" value="30">
+                    <label for="cook_time">Yes</label>
+                    {% endif %}
+                    {% if x.recipe.cook_time == 31 %}
+                    <input type="radio" name="cook_time" value="31" checked>
+                    <label for="cook_time">No</label>
+                    {% else %}
+                    <input type="radio" name="cook_time" value="31">
+                    <label for="cook_time">No</label>
+                    {% endif %}
+
+                    <input type="hidden" name="recipe_id" value="{{x.recipe.id}}">
+                    <input type="submit" value="Submit">
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
